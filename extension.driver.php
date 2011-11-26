@@ -20,9 +20,9 @@
 			  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
 			  `newsletter_id` int(11) unsigned NOT NULL,
 			  `key` varchar(200) DEFAULT NULL,
-			  `date` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
-			  `open` timestamp NULL DEFAULT NULL,
-			  `read` timestamp NULL DEFAULT NULL,
+			  `date` datetime NULL DEFAULT NULL,
+			  `open` datetime NULL DEFAULT NULL,
+			  `read` datetime NULL DEFAULT NULL,
 			  `user_agent` text,
 			  `IP` varchar(15) DEFAULT NULL,
 			  PRIMARY KEY (`id`)
