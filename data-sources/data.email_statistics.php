@@ -29,12 +29,9 @@ class datasourceemail_statistics extends DataSource
 		$data = array(
 			'newsletter_id' => is_null($param_pool['enm_newsletter_id'])?0:$param_pool['enm_newsletter_id'],
 			'key'			=> $id = uniqid(),
-			'date'			=> date( 'Y-m-d H:i:s')
 		);
 		Symphony::Database()->insert($data, 'tbl_email_statistics');
-		$result->appendChild(new XMLElement('image_url', URL . '/stats/' . $id . '.gif'));
+		$result->appendChild(new XMLElement('identifier', $id));
 		return $result;
 	}
 }
-
-?>

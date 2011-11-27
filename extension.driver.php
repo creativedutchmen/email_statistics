@@ -20,19 +20,43 @@
 			  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
 			  `newsletter_id` int(11) unsigned NOT NULL,
 			  `key` varchar(200) DEFAULT NULL,
-			  `date` datetime NULL DEFAULT NULL,
-			  `open` datetime NULL DEFAULT NULL,
-			  `read` datetime NULL DEFAULT NULL,
-			  `user_agent` text,
-			  `IP` varchar(15) DEFAULT NULL,
+			  `useragent` text DEFAULT NULL,
+			  `ip` varchar(15) DEFAULT NULL,
 			  PRIMARY KEY (`id`)
 			) ENGINE=MyISAM DEFAULT CHARSET=utf8;';
-			return Symphony::Database()->query($query);
+			if(!Symphony::Database()->query($query)) return false;
+
+			$query = 'CREATE TABLE IF NOT EXISTS `tbl_email_statistics_opens` (
+			  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+			  `statistics_id` int(11) unsigned NOT NULL,
+			  `date` datetime DEFAULT NULL,
+			  PRIMARY KEY (`id`)
+			) ENGINE=MyISAM DEFAULT CHARSET=utf8;';
+			if(!Symphony::Database()->query($query)) return false;
+
+			$query = 'CREATE TABLE IF NOT EXISTS `tbl_email_statistics_clicks` (
+			  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+			  `statistics_id` int(11) unsigned NOT NULL,
+			  `date` datetime DEFAULT NULL,
+			  `url` text DEFAULT NULL,
+			  PRIMARY KEY (`id`)
+			) ENGINE=MyISAM DEFAULT CHARSET=utf8;';
+			if(!Symphony::Database()->query($query)) return false;
+
+			return true;
 		}
 
 		public function uninstall()
 		{
 			$query = 'DROP TABLE IF EXISTS `tbl_email_statistics`';
-			return Symphony::Database()->query($query);
+			if(!Symphony::Database()->query($query)) return false;
+			
+			$query = 'DROP TABLE IF EXISTS `tbl_email_statistics_clicks`';
+			if(!Symphony::Database()->query($query)) return false;
+			
+			$query = 'DROP TABLE IF EXISTS `tbl_email_statistics_opens`';
+			if(!Symphony::Database()->query($query)) return false;
+			
+			return true;
 		}
 	}
